@@ -1,3 +1,4 @@
 import SongList from './SongList';
+import SongDetail from './SongDetail';
 
-export { SongList };
+export { SongList, SongDetail };
