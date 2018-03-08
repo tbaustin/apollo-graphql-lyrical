@@ -3,6 +3,7 @@ import { graphql } from 'react-apollo';
 
 import { fetchSong } from '../../queries';
 import { LyricCreate } from '../crud';
+import { LyricList } from '../containers';
 
 class SongDetail extends Component {
   render() {
@@ -14,6 +15,7 @@ class SongDetail extends Component {
     return (
       <div>
         <h3>{song.title}</h3>
+        <LyricList lyrics={song.lyrics} />
         <LyricCreate songId={this.props.match.params.id} />
       </div>
     );

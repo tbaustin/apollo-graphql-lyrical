@@ -8,7 +8,9 @@ import './style/style.css';
 
 import { App } from './components';
 
-const client = new ApolloClient({});
+const client = new ApolloClient({
+  dataIdFromObject: obj => obj.id
+});
 
 const Root = () => {
   return (
