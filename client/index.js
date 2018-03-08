@@ -4,6 +4,8 @@ import ApolloClient from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
+import './style/style.css';
+
 import { App } from './components';
 
 const client = new ApolloClient({});

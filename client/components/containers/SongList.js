@@ -1,16 +1,46 @@
 import React, { Component } from 'react';
 import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 import { Link } from 'react-router-dom';
 
 import { fetchSongList } from '../../queries';
+import { deleteSong } from '../../mutations';
 
 class SongList extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      err: null
+    };
+
+    this.onSongDelete = this.onSongDelete.bind(this);
+  }
+
+  onSongDelete(id) {
+    this.props
+      .deleteSong({
+        variables: {
+          id
+        },
+        refetchQueries: [{ query: fetchSongList }]
+      })
+      .then(() => {})
+      .catch(err => {
+        this.setState({
+          err
+        });
+      });
+  }
+
   renderSongs() {
     const { songs } = this.props.data;
-    return songs.map(song => (
-      <li key={song.id} className="collection-item">
-        {song.title}
+    return songs.map(({ id, title }) => (
+      <li key={id} className="collection-item">
+        {title}
+        <i className="material-icons" onClick={() => this.onSongDelete(id)}>
+          delete
+        </i>
       </li>
     ));
   }
@@ -20,6 +50,9 @@ class SongList extends Component {
     return (
       <div>
         <h3>Song List</h3>
+        {this.state.error ? (
+          <div style={{ color: 'red' }}>{this.state.error}</div>
+        ) : null}
         <ul className="collection">
           {!loading ? this.renderSongs() : <div>Loading...</div>}
         </ul>
@@ -31,4 +64,9 @@ class SongList extends Component {
   }
 }
 
-export default graphql(fetchSongList)(SongList);
+export default compose(
+  graphql(fetchSongList),
+  graphql(deleteSong, {
+    name: 'deleteSong'
+  })
+)(SongList);
