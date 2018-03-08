@@ -1,3 +1,4 @@
 import SongCreate from './SongCreate';
+import LyricCreate from './LyricCreate';
 
-export { SongCreate };
+export { SongCreate, LyricCreate };
