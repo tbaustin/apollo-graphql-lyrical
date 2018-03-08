@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 
+import { fetchSongList } from '../../queries';
+import { addSong } from '../../mutations';
+
 class SongCreate extends Component {
   constructor(props) {
     super(props);
@@ -21,7 +24,8 @@ class SongCreate extends Component {
       .AddSong({
         variables: {
           title: this.state.title
-        }
+        },
+        refetchQueries: [{ query: fetchSongList }]
       })
       .then(() => {
         this.setState({
@@ -51,21 +55,12 @@ class SongCreate extends Component {
             value={this.state.title}
             type="text"
           />
-          <button type="submit">Submit</button>
         </form>
       </div>
     );
   }
 }
 
-const AddSong = gql`
-  mutation AddSong($title: String!) {
-    addSong(title: $title) {
-      title
-    }
-  }
-`;
-
-export default graphql(AddSong, {
+export default graphql(addSong, {
   name: 'AddSong'
 })(SongCreate);

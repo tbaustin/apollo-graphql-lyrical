@@ -1,9 +1,8 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  {
-    songs {
-      id
+  mutation AddSong($title: String!) {
+    addSong(title: $title) {
       title
     }
   }
