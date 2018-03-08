@@ -50,8 +50,8 @@ class SongList extends Component {
     return (
       <div>
         <h3>Song List</h3>
-        {this.state.error ? (
-          <div style={{ color: 'red' }}>{this.state.error}</div>
+        {this.state.err ? (
+          <div style={{ color: 'red' }}>{this.state.err}</div>
         ) : null}
         <ul className="collection">
           {!loading ? this.renderSongs() : <div>Loading...</div>}
